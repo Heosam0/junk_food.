@@ -1,0 +1,42 @@
+﻿<Window x:Class="lab.user"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab"
+        mc:Ignorable="d"
+        Title="Редактировать клиента" Height="520" Width="350" Background="#FF67BCC7" ResizeMode="NoResize">
+    <Grid>
+        <Label Content="Клиент" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="97" Width="311" Cursor="AppStarting" FontSize="55" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White"/>
+
+        <Label Content="Имя" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" Height="31" Width="81" Cursor="AppStarting" FontFamily="Century Gothic" Foreground="White" FontSize="16"/>
+        <TextBox x:Name="name" HorizontalAlignment="Left" Margin="10,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81" Height="21" Background="#FF75BDFF" Foreground="White" BorderBrush="White"/>
+        <Label Content="Фамилия" HorizontalAlignment="Left" Margin="96,107,0,0" VerticalAlignment="Top" Height="31" Width="103" Cursor="AppStarting" FontFamily="Century Gothic" Foreground="White" FontSize="16"/>
+        <TextBox x:Name="Surname" HorizontalAlignment="Left" Margin="96,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="103" Height="21" Background="#FF75BDFF" Foreground="White" BorderBrush="White"/>
+        <Label Content="Отчество" HorizontalAlignment="Left" Margin="204,107,0,0" VerticalAlignment="Top" Height="31" Width="117" Cursor="AppStarting" FontFamily="Century Gothic" Foreground="White" FontSize="16"/>
+        <TextBox x:Name="Patronymic" HorizontalAlignment="Left" Margin="204,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="117" Height="21" Background="#FF75BDFF" Foreground="White" BorderBrush="White" TextChanged="TextBox_TextChanged"/>
+        <DatePicker x:Name="dateofbirth"  HorizontalAlignment="Left" Margin="175,193,0,0" VerticalAlignment="Top">
+            <DatePicker.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                    <GradientStop Color="#FFA3AEB9"/>
+                    <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                    <GradientStop Color="#FF718597" Offset="0.375"/>
+                    <GradientStop Color="#FF65BDFF" Offset="1"/>
+                </LinearGradientBrush>
+            </DatePicker.BorderBrush>
+        </DatePicker>
+        <Label Content="Дата рождения" HorizontalAlignment="Left" Margin="17,190,0,0" VerticalAlignment="Top" Height="30" Width="138" FontFamily="Century Gothic" Foreground="White" FontSize="16"/>
+        <Label Content="Паспортные данные" HorizontalAlignment="Left" Margin="10,237,0,0" VerticalAlignment="Top" Height="31" Width="180"  FontFamily="Century Gothic" Foreground="White" FontSize="16"/>
+        <TextBox x:Name="passport" HorizontalAlignment="Left" Margin="12,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="148" Height="22" Background="#FF75BDFF" Foreground="White" BorderBrush="White"/>
+        <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="10,300,0,0" VerticalAlignment="Top" Height="31" Width="162"  FontFamily="Century Gothic" Foreground="White" FontSize="16"/>
+        <TextBox x:Name="number" HorizontalAlignment="Left" Margin="10,331,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="22" Background="#FF75BDFF" Foreground="White" BorderBrush="White"/>
+        <TextBox x:Name="email" HorizontalAlignment="Left" Margin="10,393,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="22" Background="#FF75BDFF" Foreground="White" BorderBrush="White"/>
+        <Label Content="Почта" HorizontalAlignment="Left" Margin="11,362,0,0" VerticalAlignment="Top" Height="31" Width="74"  FontFamily="Century Gothic" Foreground="White" FontSize="16" RenderTransformOrigin="0.071,0.498"/>
+        <Button x:Name="asd" Content="Сохранить &#xD;&#xA;и выйти" HorizontalAlignment="Left" Margin="225,0,0,19" Width="100" Click="SaveData" Height="49" VerticalAlignment="Bottom" Foreground="White" BorderBrush="#FFEFEFEF" Background="#FF6D88F5"/>
+        <Button x:Name="asd_Copy" Content="Отмена" HorizontalAlignment="Left" Margin="225,0,0,73" Width="100" Click="Button_Click" Height="49" VerticalAlignment="Bottom" Foreground="White" BorderBrush="#FFEFEFEF" Background="#FF6D88F5"/>
+        <Button x:Name="deleteButton" Content="Удалить клиента" Visibility="Hidden" HorizontalAlignment="Left" Margin="10,0,0,19" Width="100" Click="DeleteClient" Height="20" VerticalAlignment="Bottom" Foreground="White" BorderBrush="#FFEFEFEF" Background="#FFF56D6D"/>
+
+
+
+    </Grid>
+</Window>

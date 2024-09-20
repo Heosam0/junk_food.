@@ -1,0 +1,52 @@
+﻿<Page x:Class="lab.AppData.Operator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab.AppData"
+        mc:Ignorable="d"
+        Title="Оператор" Height="450" Width="800" WindowHeight="450" WindowWidth="800">
+    <Grid Background="#FFE6A885">
+        <TabControl x:Name="tabControl" Margin="10,91,35,57">
+            <TabItem x:Name="tab1" Header="Клиенты" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+                <Grid Background="#FFCEFEFF">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="19*"/>
+                        <ColumnDefinition Width="346*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="datagrid1" CanUserAddRows = "false" Background="#FFFFCECE" Grid.ColumnSpan="2" FontFamily="Century Gothic" BorderBrush="#FFFFAF00" />
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab_2" Header="Заказы" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+                <Grid Background="#FFCEFEFF">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="19*"/>
+                        <ColumnDefinition Width="346*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="datagrid2" CanUserAddRows = "false" Background="#FFFFCECE" Grid.ColumnSpan="2" FontFamily="Century Gothic" FontSize="12" />
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab2" Header="Сотрудники" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="datagrid3" CanUserAddRows = "false" Background="#FFFFCECE" FontFamily="Century Gothic" FontSize="12" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab3" Header="Категории" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="datagrid4" CanUserAddRows = "false" Background="#FFFFCECE" FontFamily="Century Gothic" FontSize="12" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tab4" Header="Услуги" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="datagrid5" CanUserAddRows = "false" Background="#FFFFCECE" FontFamily="Century Gothic" FontSize="12" />
+                </Grid>
+            </TabItem>
+
+
+        </TabControl>
+        <Image HorizontalAlignment="Center" Height="87" VerticalAlignment="Top" Width="120" Source="/gleeb.png"/>
+
+    </Grid>
+</Page>
