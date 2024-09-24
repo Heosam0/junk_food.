@@ -8,7 +8,7 @@
         Title="Оператор" Height="450" Width="800" WindowHeight="450" WindowWidth="800">
     <Grid Background="#FFE6A885">
         <TabControl x:Name="tabControl" Margin="10,91,35,57">
-            <TabItem x:Name="tab1" Header="Клиенты" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+            <TabItem x:Name="tab1" Header="Заказы" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
                 <Grid Background="#FFCEFEFF">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="19*"/>
@@ -18,7 +18,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tab_2" Header="Заказы" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+            <TabItem x:Name="tab_2" Header="Сотрудники" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
                 <Grid Background="#FFCEFEFF">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="19*"/>
@@ -28,19 +28,14 @@
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tab2" Header="Сотрудники" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+            <TabItem x:Name="tab2" Header="Ингридиенты" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="datagrid3" CanUserAddRows = "false" Background="#FFFFCECE" FontFamily="Century Gothic" FontSize="12" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tab3" Header="Категории" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+            <TabItem x:Name="tab3" Header="Меню" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="datagrid4" CanUserAddRows = "false" Background="#FFFFCECE" FontFamily="Century Gothic" FontSize="12" />
-                </Grid>
-            </TabItem>
-            <TabItem x:Name="tab4" Header="Услуги" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
-                <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="datagrid5" CanUserAddRows = "false" Background="#FFFFCECE" FontFamily="Century Gothic" FontSize="12" />
                 </Grid>
             </TabItem>
 
