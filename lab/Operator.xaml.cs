@@ -52,8 +52,8 @@ namespace lab.AppData
             {
                 datagrid1.ItemsSource = Postgres.Code("select * from show_orders").DefaultView;
                 datagrid2.ItemsSource = Postgres.Code("select * from show_employees").DefaultView;
-                datagrid4.ItemsSource = Postgres.Code("select * from show_ingredients").DefaultView;
-                datagrid3.ItemsSource = Postgres.Code("select * from show_menu").DefaultView;
+                datagrid3.ItemsSource = Postgres.Code("select * from show_ingredients").DefaultView;
+                datagrid4.ItemsSource = Postgres.Code("select * from show_menu").DefaultView;
             }
             catch (Exception ex)
             {
