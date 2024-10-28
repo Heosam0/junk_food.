@@ -34,11 +34,16 @@ namespace lab
             string str = Postgres.Initialize(login.Text, pass.Password);
             if (str != "Succesful")
             {
-               
-               MessageBox.Show(str, "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
-      
+
+                MessageBox.Show(str, "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
-            else FrmMain.Navigate(new Operator(login.Text, pass.Password));
+            else
+            {
+                Window a = new Operator(login.Text, pass.Password);
+                a.Show();
+                this.Close();   
+            }
             Postgres.connection.Close();
         }
 

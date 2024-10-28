@@ -17,7 +17,7 @@ namespace lab.AppData
     /// <summary>
     /// Interaction logic for Tables.xaml
     /// </summary>
-    public partial class Operator : Page
+    public partial class Operator : Window
     {
         db Postgres;
         string login;
@@ -116,8 +116,6 @@ namespace lab.AppData
                         selectedItem["phone"].ToString(),
                         selectedItem["email"].ToString()
                         );
-                    user window = new user(Convert.ToInt32(selectedItem["id"]), a, Postgres, this);
-                    window.Show();
                     
                 }
             }
@@ -127,25 +125,9 @@ namespace lab.AppData
             
         }
 
-        private void asd_Click(object sender, RoutedEventArgs e)
-        {
-            user window = new user(Postgres, this);
-            window.Show();
-        }
 
        
 
-        private void asdd_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            order a = new order(Postgres, this);
-            a.Show();
-        }
-
-        private void asdd_Click(object sender, RoutedEventArgs e)
-        {
-            order a = new order(Postgres, this);
-            a.Show();
-        }
     }
 
    
