@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using lab.AppData;
 using Npgsql;
 using Npgsql.PostgresTypes;
 using System;
@@ -16,26 +17,66 @@ namespace lab
     public class db
     {
        
-            public NpgsqlConnection connection;
-            string login;
-            string password;
+        public NpgsqlConnection connection;
+        private string login;
 
-            public string Initialize(string login, string password)
+        public string Initialize(string login, string password)
+        {
+            this.login = login;
+            try
             {
-                this.login = login;
-                this.password = password;
-                try
-                {
-                    string connectionString = $"Host=localhost:5432;Username={login};Password={password};Database=jf";
-                    connection = new NpgsqlConnection(connectionString);
-                    connection.Open();
-                    return "Succesful";
-                }
-                catch (Exception ex)
-                {
-                    return ex.Message;
+                string connectionString = $"Host=localhost;Port=5432;Username={login};Password={password};Database=jf";
+                connection = new NpgsqlConnection(connectionString);
+                connection.Open();
+                return "Successful";
             }
+            catch (Exception ex)
+            {
+                return ex.Message;
             }
+        }
+
+        public List<Employee> GetEmployees()
+        {
+            return connection.Query<Employee>("SELECT * FROM employees").ToList();
+        }
+
+        public List<Order> GetOrders()
+        {
+            return connection.Query<Order>("SELECT * FROM orders").ToList();
+        }
+
+        public List<MenuItem> GetMenuItems()
+        {
+            return connection.Query<MenuItem>("SELECT * FROM menu").ToList();
+        }
+        public List<MenuIngredient> GetMenuIngreds()
+        {
+            return connection.Query<MenuIngredient>("SELECT * FROM show_ingredients").ToList();
+        }
+
+        public void UpdateEmployee(Employee employee)
+        {
+            var sql = "UPDATE employees SET first_name = @FirstName, last_name = @LastName, patronymic = @Patronymic, phone = @Phone, birthday = @Birthday, start_date = @StartDate, post_id = @PostId WHERE id = @Id";
+            connection.Execute(sql, employee);
+        }
+
+        public void AddEmployee(Employee employee)
+        {
+            var sql = "INSERT INTO employees (first_name, last_name, patronymic, phone, birthday, start_date, post_id) VALUES (@FirstName, @LastName, @Patronymic, @Phone, @Birthday, @StartDate, @PostId)";
+            connection.Execute(sql, employee);
+        }
+
+        public void DeleteEmployee(int id)
+        {
+            var sql = "DELETE FROM employees WHERE id = @Id";
+            connection.Execute(sql, new { Id = id });
+        }
+    
+
+
+            
+            
 
             public DataTable Code(string sql)
             {
@@ -57,96 +98,71 @@ namespace lab
                     return null;
                 }
             }
+        public bool UpdateRecord(string tableName, int id, Dictionary<string, object> updatedValues)
+        {
+            // Проверка роли текущего пользователя
+            if (!HasUpdateAccess(tableName))
+            {
+                MessageBox.Show("У вас нет прав для редактирования этой записи.");
+                return false;
+            }
 
-      //  public bool InsertClient(Client client)
-      //  {
-      //      try
-      //      {
-      //       
-      //
-      //          string sql = $"insert into clients " +
-      //              $"values ((SELECT max(id)+1 from clients), '{client.Name}', '{client.Surname}', '{client.Patronymic}', to_date('{client.dateofbirth}', 'DD.MM.YYYY'), '{client.passport}', '{client.number}',  '{client.email}', '{{\"login\": \"{client.email.ToLower().Split('@')[0]}\", \"password\": \"{new Random().Next(1000000, 9999999)}\"}}')    ";
-      //          NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-      //          NpgsqlDataReader reader = command.ExecuteReader();
-      //         
-      //      }
-      //      catch (Exception ex)
-      //      {
-      //          MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-      //          return false;
-      //      }
-      //      return true;
-      //  }
-      //
-      //  public void UpdateClient(int id,Client client)
-      //  {
-      //      try
-      //      {
-      //          string sql = $"Update clients SET first_name = '{client.Name}', " +
-      //              $"last_name = '{client.Surname}', " +
-      //              $"patronymic = '{client.Patronymic}', " +
-      //              $"date_of_birth = to_date('{client.dateofbirth}', 'DD.MM.YYYY')," +
-      //              $"passport = '{client.passport}', " +
-      //              $"phone = '{client.number}', " +
-      //              $"email = '{client.email}' " +
-      //              $"where id = {id} ";
-      //          NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-      //          NpgsqlDataReader reader = command.ExecuteReader();
-      //
-      //      }
-      //      catch (Exception ex)
-      //      {
-      //          MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-      //
-      //      }
-      //  }
-      //
-      //  public void DeleteClient(int id)
-      //  {
-      //      try
-      //      {
-      //          string sql = $"delete from clients " +
-      //              $"where id = {id} ";
-      //          NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-      //          NpgsqlDataReader reader = command.ExecuteReader();
-      //      }
-      //      catch (Exception ex)
-      //      {
-      //          MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-      //
-      //      }
-      //  }
-      //
-        //    public ObservableCollection<Client> GetClientFullNames()
-        //    {
-        //        try
-        //        {
-        //            ObservableCollection<Client> ClientsList = new ObservableCollection<Clients>();
-        //            string sql = $"select * from clients";
-        //            NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-        //            NpgsqlDataReader reader = command.ExecuteReader();
-        //            while(reader.Read())
-        //            {
-        //
-        //                ClientsList.Add(new Client
-        //                {
-        //                    first_name = reader.GetInt32(0),
-        //                    Name = reader.GetString(1),
-        //                    Email = reader.GetString(2)
-        //                });
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show(ex.Message);
-        //            return null;
-        //        }
-        //    }
-        //
+            // Формируем SQL-запрос для обновления записи
+            var sql = new StringBuilder($"UPDATE {tableName} SET ");
+            var parameters = new List<NpgsqlParameter>();
+            int paramIndex = 0;
+
+            foreach (var item in updatedValues)
+            {
+                sql.Append($"{item.Key} = @param{paramIndex}, ");
+                parameters.Add(new NpgsqlParameter($"@param{paramIndex}", item.Value));
+                paramIndex++;
+            }
+
+            // Убираем лишнюю запятую и пробел в конце строки
+            sql.Length -= 2;
+            sql.Append(" WHERE id = @id");
+
+            parameters.Add(new NpgsqlParameter("@id", id));
+
+            try
+            {
+                using (var command = new NpgsqlCommand(sql.ToString(), connection))
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Запись успешно обновлена.");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при обновлении записи: {ex.Message}");
+                return false;
+            }
+        }
+
+        // Метод для проверки прав на редактирование в зависимости от роли
+        private bool HasUpdateAccess(string tableName)
+        {
+            switch (login)
+            {
+                case "postgre":
+                    return true; // доступ ко всем таблицам
+                case "manager":
+                    return tableName == "employees" || tableName == "orders" || tableName == "menu";
+                case "cashier":
+                    return tableName == "orders";
+                default:
+                    return false;
+            }
+        }
+
+
 
 
     }
-    }
+}
 
 
 

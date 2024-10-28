@@ -32,7 +32,7 @@ namespace lab
         {
             db Postgres = new db();
             string str = Postgres.Initialize(login.Text, pass.Password);
-            if (str != "Succesful")
+            if (str != "Successful")
             {
 
                 MessageBox.Show(str, "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);

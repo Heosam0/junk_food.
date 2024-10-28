@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{98B3E5A6-2C91-49BD-AB4C-5A86F8891AFB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>lab</RootNamespace>
-    <AssemblyName>lab</AssemblyName>
+    <RootNamespace>jf</RootNamespace>
+    <AssemblyName>jf</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -126,7 +126,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppData\User.cs" />
     <Page Include="Operator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -140,6 +139,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppData\AppFrame.cs" />
+    <Compile Include="AppData\Employee.cs" />
     <Compile Include="Operator.xaml.cs">
       <DependentUpon>Operator.xaml</DependentUpon>
     </Compile>
@@ -190,9 +190,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="hleeb.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="gleeb.png" />
