@@ -124,7 +124,7 @@ public partial class Operator : Window
                     {
                         Order a = e.Row.Item as Order;
                         // Получаем статус из перечисления
-                        Status newStatus = a.Status; // Например, выбранный статус из ComboBox
+                        Status newStatus = a.Status; 
 
 
                         // Теперь сохраняем его в базе данных
