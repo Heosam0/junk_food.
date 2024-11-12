@@ -11,26 +11,75 @@
         <TabControl x:Name="tabControl" Margin="10,91,35,57">
             <TabItem x:Name="tab1" Header="Заказы" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
                 <Grid Background="#FFCEFEFF">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="19*"/>
-                        <ColumnDefinition Width="346*"/>
-                    </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="datagrid1" ItemsSource="{Binding Orders}" AutoGenerateColumns="True"  CellEditEnding="DataGrid_CellEditEnding" IsReadOnly="false" Background="#FFFFCECE" Grid.ColumnSpan="2" FontFamily="Arial" BorderBrush="#FFFFAF00" />
+                    <DataGrid x:Name="datagrid1" ItemsSource="{Binding Orders}" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding" IsReadOnly="false" Background="#FFFFCECE" Grid.ColumnSpan="2" FontFamily="Arial" BorderBrush="#FFFFAF00">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Имя" Binding="{Binding HowCall}" />
 
+                            <DataGridTemplateColumn Header="Время заказа">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DateTime, StringFormat=dd.MM.yyyy HH:mm}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <DatePicker SelectedDate="{Binding DateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                                            <TextBox Text="{Binding DateTime, StringFormat=HH:mm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                            </DataGridTemplateColumn>
+
+
+
+                            <DataGridTextColumn Header="Комментарий" Binding="{Binding Note}" />
+
+                            <!-- Галочка для доставки -->
+                            <DataGridCheckBoxColumn Header="Доставка" Binding="{Binding ForDelivery}" />
+
+                            <DataGridComboBoxColumn Header="Статус" SelectedItemBinding="{Binding Status, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridComboBoxColumn.ItemsSource>
+                                    <x:Array Type="{x:Type local:Status}">
+                                        <local:Status>В_процессе</local:Status>
+                                        <local:Status>Готов</local:Status>
+                                        <local:Status>Выдан</local:Status>
+                                    </x:Array>
+                                </DataGridComboBoxColumn.ItemsSource>
+                            </DataGridComboBoxColumn>
+
+
+
+                            <DataGridTextColumn Header="Сумма" Binding="{Binding Sum}" />
+                            <DataGridTextColumn Header="Стол" Binding="{Binding TableNumber}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tab_2" Header="Сотрудники"  FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
+
+            <TabItem x:Name="tab_2" Header="Сотрудники" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
                 <Grid Background="#FFCEFEFF">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="19*"/>
                         <ColumnDefinition Width="346*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid x:Name="datagrid2" ItemsSource="{Binding Employees}"  CellEditEnding="DataGrid_CellEditEnding"  Background="#FFFFCECE" Grid.ColumnSpan="2" FontFamily="Arial" BorderBrush="#FFFFAF00">
-                        
+                    <DataGrid x:Name="datagrid2" ItemsSource="{Binding Employees}" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding" Background="#FFFFCECE" Grid.ColumnSpan="2" FontFamily="Arial" BorderBrush="#FFFFAF00">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                            <DataGridTextColumn Header="Имя" Binding="{Binding first_name}" />
+                            <DataGridTextColumn Header="Фамилия" Binding="{Binding last_name}" />
+                            <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" />
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" />
+                            <DataGridTextColumn Header="День рождения" Binding="{Binding Birthday}" />
+                            <DataGridTextColumn Header="Поступление на работу" Binding="{Binding StartDate}" />
+                            <DataGridTextColumn Header="Должность" Binding="{Binding PostId}" />
+                        </DataGrid.Columns>
                     </DataGrid>
-
                 </Grid>
             </TabItem>
+
             <TabItem x:Name="tab2" Header="Ингридиенты" FontFamily="Arial Black" Background="#FFFB7D7D" BorderBrush="#FFFFAF00" Foreground="#FFA43E3E">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid x:Name="datagrid3" ItemsSource="{Binding MenuItems}" AutoGenerateColumns="True"  CellEditEnding="DataGrid_CellEditEnding" CanUserAddRows = "false" IsReadOnly="false" Background="#FFFFCECE" FontFamily="Arial" FontSize="12" />

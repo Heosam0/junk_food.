@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Net.Configuration;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,21 +39,21 @@ namespace lab
 
         public List<Employee> GetEmployees()
         {
-            return connection.Query<Employee>("SELECT * FROM employees").ToList();
+            return connection.Query<Employee>("SELECT * FROM employees order by id").ToList();
         }
 
         public List<Order> GetOrders()
         {
-            return connection.Query<Order>("SELECT * FROM orders").ToList();
+            return connection.Query<Order>("SELECT * FROM orders order by id").ToList();
         }
 
         public List<MenuItem> GetMenuItems()
         {
-            return connection.Query<MenuItem>("SELECT * FROM menu").ToList();
+            return connection.Query<MenuItem>("SELECT * FROM menu order by id").ToList();
         }
         public List<MenuIngredient> GetMenuIngreds()
         {
-            return connection.Query<MenuIngredient>("SELECT * FROM show_ingredients").ToList();
+            return connection.Query<MenuIngredient>("SELECT * FROM show_ingredients order by id").ToList();
         }
 
         public void UpdateEmployee(Employee employee)
@@ -78,30 +79,23 @@ namespace lab
             
             
 
-            public DataTable Code(string sql)
+            public void Code(string sql)
             {
                 try
                 {
-                    DataTable dt = new DataTable();
-                    NpgsqlCommand command = new NpgsqlCommand(sql, connection);
-                    NpgsqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        dt.Load(reader);
-                        return dt;
-                    }
-                    return null;
+                connection.Execute(sql);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return null;
+                    
                 }
+            
             }
         public bool UpdateRecord(string tableName, int id, Dictionary<string, object> updatedValues)
         {
             // Проверка роли текущего пользователя
-            if (!HasUpdateAccess(tableName))
+            if (HasUpdateAccess(tableName))
             {
                 MessageBox.Show("У вас нет прав для редактирования этой записи.");
                 return false;

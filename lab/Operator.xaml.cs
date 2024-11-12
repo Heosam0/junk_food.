@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
@@ -19,12 +20,22 @@ namespace lab.AppData
     /// <summary>
     /// Interaction logic for Tables.xaml
     /// </summary>
-    public partial class Operator : Window
+    /// 
+
+    public enum Status
+    {
+        В_процессе,
+        Готов,
+        Выдан
+    }
+
+
+
+public partial class Operator : Window
     {
         db Postgres;
         string login;
         string password;
-        int sadfdf = 0;
         public ObservableCollection<Employee> Employees { get; set; }
         public ObservableCollection<Order> Orders { get; set; }
         public ObservableCollection<MenuItem> MenuItems { get; set; }
@@ -48,6 +59,11 @@ namespace lab.AppData
             LoadData();
 
         }
+
+       
+
+
+
         private void LoadData()
         {
             var employees = Postgres.GetEmployees();
@@ -91,33 +107,62 @@ namespace lab.AppData
 
         private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-          //  var dataGrid = sender as DataGrid;
-          //  if (dataGrid != null && e.EditAction == DataGridEditAction.Commit)
-          //  {
-          //      // Извлечение изменённого значения
-          //      var editedTextbox = e.EditingElement as TextBox;
-          //      if (editedTextbox != null)
-          //      {
-          //          string newValue = editedTextbox.Text;
-          //
-          //          // Проверка на пустое значение
-          //          if (!string.IsNullOrWhiteSpace(newValue))
-          //          {
-          //              // Получение идентификатора записи (здесь предполагается, что он хранится в первом столбце)
-          //              var rowView = e.Row.Item as DataRowView;
-          //              int id = Convert.ToInt32(rowView["id"]);
-          //
-          //              // Название изменённого столбца
-          //              string columnName = e.Column.Header.ToString();
-          //
-          //              // Обновление в базе данных
-          //              UpdateDatabase(dataGrid.Name, id, columnName, newValue);
-          //          }
-          //      }
-          //  }
+            var dataGrid = sender as DataGrid;
+            if (dataGrid != null && e.EditAction == DataGridEditAction.Commit)
+            {
+                var editedElement = e.EditingElement as FrameworkElement;
+
+                if (editedElement != null)
+                {
+                    object newValue = null;
+
+                    if (editedElement is TextBox editedTextbox)
+                    {
+                        newValue = editedTextbox.Text;
+                    }
+                    else if (editedElement is ComboBox editedComboBox)
+                    {
+                        Order a = e.Row.Item as Order;
+                        // Получаем статус из перечисления
+                        Status newStatus = a.Status; // Например, выбранный статус из ComboBox
+
+
+                        // Теперь сохраняем его в базе данных
+                        Postgres.Code($"UPDATE orders SET status = '{a.Status}'::status WHERE id = {a.Id}");
+                       
+
+                    }
+
+                    if (newValue != null)
+                    {
+                        var rowItem = e.Row.Item;
+                        var itemType = rowItem.GetType();
+
+                        var idProperty = itemType.GetProperty("Id");
+                        if (idProperty != null)
+                        {
+                            int id = (int)idProperty.GetValue(rowItem);
+
+                            // Получаем исходное имя свойства (название столбца в базе данных)
+                            var boundProperty = e.Column.SortMemberPath;
+
+                            if (!string.IsNullOrEmpty(boundProperty))
+                            {
+                                // Преобразуем значение статуса в строку перед обновлением
+                                UpdateDatabase(dataGrid.Name, id, boundProperty, newValue.ToString());
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-       private void UpdateDatabase(string dataGridName, int id, string columnName, string newValue)
+
+
+
+
+
+        private void UpdateDatabase(string dataGridName, int id, string columnName, string newValue)
 {
     string tableName = null;
 
@@ -304,6 +349,15 @@ namespace lab.AppData
         }
 
     }
-
+    public static class EnumExtensions
+    {
+        public static string GetDescription(this Enum value)
+        {
+            FieldInfo fi = value.GetType().GetField(value.ToString());
+            DescriptionAttribute[] attributes =
+                (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attributes.Length > 0 ? attributes[0].Description : value.ToString();
+        }
+    }
 
 }
